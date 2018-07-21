@@ -14,17 +14,27 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"
+        android:id="@+id/displayText"
         android:layout_alignParentTop="true"
         />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="fill_parent"
+        android:id="@+id/commandInput"
+        android:layout_width="wrap_content"
+        android:maxLength="16"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="What do you want to do?" />
+
+    <Button
+        android:id="@+id/enterButton"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/commandInput"
+        android:text="Enter" />
 </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

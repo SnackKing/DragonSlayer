@@ -1,0 +1,84 @@
+{
+   "areaName":"bedroom",
+   "description":"The sunlight creeping through the drapes hits your eyes, awakening you from your slumber. As you slowly begin to stir, you take note of the room around you. You are in the King's guest chambers. You don't know what he wants, but it must be important if he let you stay in his guest quarters. Across from you is a large well-crafted dresser with an enourmous gilded mirror above it. Sitting on the dresser is your badge. On the left, luxurious silk drapes cover up the windows. To your right is a closet containing spare clothes. At the foot of the bed is a locked chest. To the right of the dresser is a door that will lead to King's hall. ",
+   "objects":[
+      {
+         "objectName":"mirror",
+         "interactions":{
+            "EXAMINE":[
+               {
+                  "output":"You look into the mirror and examine your face. I will not tell you what your character looks like. That is up to you to decide!"
+               }
+            ],
+            "DESTROY":[
+               {
+                  "output":"You punch the mirror. Your hand is now bleeding. Broken glass coats the floor. You see a key behind the shards of glass. You take it."
+               },
+               {
+                  "DAMAGE_PLAYER":10
+               },
+               {
+                  "newDescription":"The mirror is shattered into pieces. Hopefully the king does not see it."
+               },
+               {
+                  "ADD_TO_INVENTORY":{
+                     "name":"Old Key",
+                     "type":"key",
+                     "chestId":1,
+                     "description":"An old key you found behind a mirror in the King's guest room. It has some blood on it from when you punched the mirror."
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "objectName":"chest",
+         "chestId":1,
+         "locked":true,
+         "interactions":{
+            "EXAMINE":[
+               {
+                  "type":"OUTPUT",
+                  "output":"The old chest seems out of place in comparison to the rest of the room. It looks like it is 100 years old. You try to remove the rusty lock, but you need a key."
+               }
+            ],
+            "BREAK":[
+               {
+                  "type":"OUTPUT",
+                  "output":"Despite its apparent age, the chest is extremely sturdy. The only way to open it is to use a key."
+               }
+            ],
+            "OPEN":[
+               {
+                  "type":"OUTPUT",
+                  "output":"You insert the key into the lock and turn it, producing a satisfying clicking sound. You flip the lid open and peer inside the chest. Inside are some coins and a steel dagger. You take them"
+               },
+               {
+                  "type":"UNLOCK",
+                  "locked":false
+               },
+               {
+                  "type":"ADD",
+                  "ADD_TO_INVENTORY":{
+                     "name":"Steel Dagger",
+                     "type":"WEAPON",
+                     "description":"A finely crafted steel dagger. You will probably need something a bit stronger, but it might still be useful",
+                     "weight":1,
+                     "attack":2
+                  }
+               },
+               {
+                  "type":"ADD",
+                  "ADD_TO_INVENTORY":{
+                     "name":"coins",
+                     "type":"MONEY",
+                     "description":"The national currency of this land. Each coin is made of pure silver and has the face of the king printed on it.",
+                     "weight":0,
+                     "amount":10
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

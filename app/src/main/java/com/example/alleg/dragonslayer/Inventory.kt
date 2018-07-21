@@ -4,6 +4,10 @@ import java.util.ArrayList
 
 class Inventory {
     internal var items: ArrayList<Item>
+    internal var numCoins: Int = 0
+    set(valueToAdd){
+        field += valueToAdd
+    }
     val totalWeight: Int
         get() {
             var currentTotal = 0
@@ -15,6 +19,7 @@ class Inventory {
 
     init {
         items = ArrayList()
+        numCoins = 0
     }
 
     fun getItem(name: String): Item? {
@@ -24,5 +29,8 @@ class Inventory {
             }
         }
         return null
+    }
+    fun addItem(toAdd:Item){
+        items.add(toAdd);
     }
 }
