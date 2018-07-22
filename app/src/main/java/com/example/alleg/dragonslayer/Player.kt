@@ -24,6 +24,11 @@ object Player : Human() {
         inv.numCoins = numCoins
     }
 
+    fun removeHealth(toRemove:Int){
+        health -= 10;
+
+    }
+
 
 
 }

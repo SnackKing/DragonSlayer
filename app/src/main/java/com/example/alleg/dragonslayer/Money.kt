@@ -2,7 +2,7 @@ package com.example.alleg.dragonslayer
 
 import org.json.JSONObject
 
-class Money(src:JSONObject): Item() {
+class Money(src:JSONObject): Item(src) {
     init{
         name = "coins"
         weight = 0;

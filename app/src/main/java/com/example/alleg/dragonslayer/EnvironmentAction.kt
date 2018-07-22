@@ -8,8 +8,9 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class EnvironmentAction(var src:JSONArray) {
 
-   fun execute(){
+   fun execute(obj:EnvironmentObject):String{
        var i = 0;
+       var output = ""
        while(i < src.length()){
            val currentAction:JSONObject = src.getJSONObject(i)
            val type = currentAction.getString("type")
@@ -17,12 +18,15 @@ class EnvironmentAction(var src:JSONArray) {
                "OUTPUT"-> executeOutput(currentAction)
                "ADD"-> executeAdd(currentAction)
                "OPEN"->executeOpen(currentAction)
-               "TAKE"->executeTake(currentAction)
+               "UNLOCK"->executeOpen(currentAction)
                "TALK"->executeTalk(currentAction)
+               "CHANGE_DESCRIPTION" -> obj.description = currentAction.getString("NEW_DESCRIPTION")
+               "DAMAGE_PLAYER" -> Player.removeHealth(currentAction.getInt("DAMAGE_PLAYER"))
            }
 
            i++
        }
+       return output
 
    }
     fun executeOutput(currentAction:JSONObject):String{
@@ -32,6 +36,7 @@ class EnvironmentAction(var src:JSONArray) {
         val jsonItemToAdd:JSONObject = currentAction.getJSONObject(addTag)
         val itemToAdd = Item.Companion.getItemFromObject(jsonItemToAdd)
         Player.addToInventory(itemToAdd)
+
     }
     fun executeOpen(currentAction:JSONObject){
 

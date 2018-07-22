@@ -2,7 +2,7 @@ package com.example.alleg.dragonslayer
 
 import org.json.JSONObject
 
-abstract class Item {
+abstract class Item(src:JSONObject) {
     internal var weight = 1
     internal var name = "object"
     var description = "It is a $name"
@@ -10,13 +10,15 @@ abstract class Item {
 
 
     companion object {
-        final val moneyTag:String = "MONEY"
-        final val weaponTag:String = "WEAPON"
+        val moneyTag:String = "MONEY"
+        val weaponTag:String = "WEAPON"
+        val keyTag:String = "KEY"
         fun getItemFromObject(src:JSONObject):Item{
             var item:Item? = null
             when(src.getString("type")){
                 moneyTag -> item = Money(src)
                 weaponTag -> item = Weapon(src)
+
             }
             return item!!
         }

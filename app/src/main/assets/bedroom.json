@@ -4,26 +4,27 @@
    "objects":[
       {
          "objectName":"mirror",
+         "description":"You look into the mirror and examine your face. I will not tell you what your character looks like. That is up to you to decide!",
          "interactions":{
-            "EXAMINE":[
-               {
-                  "output":"You look into the mirror and examine your face. I will not tell you what your character looks like. That is up to you to decide!"
-               }
-            ],
+
             "DESTROY":[
                {
+                  "type":"OUTPUT",
                   "output":"You punch the mirror. Your hand is now bleeding. Broken glass coats the floor. You see a key behind the shards of glass. You take it."
                },
                {
+                  "type":"DAMAGE_PLAYER",
                   "DAMAGE_PLAYER":10
                },
                {
-                  "newDescription":"The mirror is shattered into pieces. Hopefully the king does not see it."
+                  "type":"CHANGE_DESCRIPTION",
+                  "NEW_DESCRIPTION":"The mirror is shattered into pieces. Hopefully the king does not see it."
                },
                {
+                  "type":"ADD",
                   "ADD_TO_INVENTORY":{
                      "name":"Old Key",
-                     "type":"key",
+                     "type":"KEY",
                      "chestId":1,
                      "description":"An old key you found behind a mirror in the King's guest room. It has some blood on it from when you punched the mirror."
                   }
@@ -33,15 +34,10 @@
       },
       {
          "objectName":"chest",
+         "description": "It is an old chest made of sturdy oak. It is secured by a rusty lock",
          "chestId":1,
          "locked":true,
          "interactions":{
-            "EXAMINE":[
-               {
-                  "type":"OUTPUT",
-                  "output":"The old chest seems out of place in comparison to the rest of the room. It looks like it is 100 years old. You try to remove the rusty lock, but you need a key."
-               }
-            ],
             "BREAK":[
                {
                   "type":"OUTPUT",

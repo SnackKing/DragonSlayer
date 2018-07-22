@@ -38,8 +38,23 @@ class MainActivity : AppCompatActivity() {
            var command:String = commandInput.text.toString().toLowerCase()
            command = filterCommand(command)
            val action:Action = command.substring(0,command.indexOf(' ')).getSynonym()
-           val newText:String = displayText.text.toString() + "\n" + action + " " + command.substring(command.indexOf(' '))
-           displayText.text = newText
+           val subject =  command.substring(command.indexOf(' ')+1)
+           displayText.text = displayText.text.toString() + "\n" + command
+           if(action != Action.ERROR) {
+               if (environment.containsKey(subject)) {
+                   val obj = environment.get(subject)
+                   if (obj != null) {
+                      val output = obj.execute(action)
+                       displayText.text = displayText.text.toString() + "\n" + output
+                   }
+               }
+               else{
+                   displayText.text = "That object does not exist"
+               }
+           }
+           else{
+               displayText.text = "You can't do that."
+           }
 
        }
 
@@ -83,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             val jArray = obj.getJSONArray("objects")
             val formList = ArrayList<HashMap<String, String>>()
             descrition = obj.getString("description")
-            output.text = output.text.toString() +  "/n" + descrition
+            output.text = output.text.toString() +  "\n" + descrition
             environment = parseObjects(jArray)
 
         } catch (e: JSONException) {

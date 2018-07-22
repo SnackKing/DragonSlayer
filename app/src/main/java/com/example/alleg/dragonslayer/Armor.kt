@@ -1,6 +1,8 @@
 package com.example.alleg.dragonslayer
 
-class Armor(internal var type: EquipmentTypes, internal var defense: Int, description: String, name: String) : Item() {
+import org.json.JSONObject
+
+class Armor(src:JSONObject) : Item(src) {
     init {
         this.description = description
         this.name = name
