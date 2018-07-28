@@ -26,7 +26,6 @@ object Player : Human() {
 
     fun removeHealth(toRemove:Int){
         health -= 10;
-
     }
 
 

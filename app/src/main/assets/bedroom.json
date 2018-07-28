@@ -35,10 +35,11 @@
       {
          "objectName":"chest",
          "description": "It is an old chest made of sturdy oak. It is secured by a rusty lock",
-         "chestId":1,
+         "keyId":1,
          "locked":true,
+         "open": false,
          "interactions":{
-            "BREAK":[
+            "DESTROY":[
                {
                   "type":"OUTPUT",
                   "output":"Despite its apparent age, the chest is extremely sturdy. The only way to open it is to use a key."

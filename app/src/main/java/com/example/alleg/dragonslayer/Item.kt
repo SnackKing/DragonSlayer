@@ -18,6 +18,7 @@ abstract class Item(src:JSONObject) {
             when(src.getString("type")){
                 moneyTag -> item = Money(src)
                 weaponTag -> item = Weapon(src)
+                keyTag -> item = Key(src)
 
             }
             return item!!

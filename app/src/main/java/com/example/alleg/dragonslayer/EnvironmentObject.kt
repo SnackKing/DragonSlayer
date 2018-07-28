@@ -10,6 +10,10 @@ open class EnvironmentObject(val src:JSONObject){
      var talkAction:EnvironmentAction? = null
      var name:String
      var description:String
+     var locked = false
+     var open = false
+     var keyId = -1
+     var broken = false
 
     init{
         name = src.getString("objectName")
@@ -21,6 +25,11 @@ open class EnvironmentObject(val src:JSONObject){
         }
         if(actions.has("OPEN")){
             openAction = EnvironmentAction(actions.getJSONArray("OPEN"))
+            locked = src.getBoolean("locked")
+            open = src.getBoolean("open")
+            keyId = src.getInt("keyId")
+
+
         }
         if(actions.has("TAKE")){
             takeAction = EnvironmentAction(actions.getJSONArray("TAKE"))
@@ -30,9 +39,13 @@ open class EnvironmentObject(val src:JSONObject){
         var output = ""
         when(action){
             Action.EXAMINE -> output = description
-            Action.DESTROY -> output = destroyAction?.execute(this) ?:"You can't do that to the " + name
-            Action.OPEN    -> output = openAction?.execute(this)?:"You can't do that to the " + name
-            Action.TALK    -> output = talkAction?.execute(this)?:"You can't do that to the " + name
+            Action.DESTROY -> {
+                if(!broken) output = destroyAction?.execute(this) ?:"You can't do that to the " + name else output = name + " is already broken"
+                broken = true
+            }
+            Action.OPEN -> if(Player.inventory.hasKey(keyId) || !locked)output = openAction?.execute(this)?:"You can't do that to the " + name  else  output ="It is locked"
+
+            Action.TALK -> output = talkAction?.execute(this)?:"You can't do that to the " + name
         }
         return output
 

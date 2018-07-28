@@ -15,13 +15,16 @@ class EnvironmentAction(var src:JSONArray) {
            val currentAction:JSONObject = src.getJSONObject(i)
            val type = currentAction.getString("type")
            when(type){
-               "OUTPUT"-> executeOutput(currentAction)
-               "ADD"-> executeAdd(currentAction)
-               "OPEN"->executeOpen(currentAction)
-               "UNLOCK"->executeOpen(currentAction)
-               "TALK"->executeTalk(currentAction)
+               "OUTPUT"-> output += executeOutput(currentAction)
+               "ADD"-> executeAdd(currentAction,obj)
+               "OPEN"->executeOpen(currentAction,obj)
+               "TALK"->output += executeTalk(currentAction,obj)
                "CHANGE_DESCRIPTION" -> obj.description = currentAction.getString("NEW_DESCRIPTION")
-               "DAMAGE_PLAYER" -> Player.removeHealth(currentAction.getInt("DAMAGE_PLAYER"))
+               "DAMAGE_PLAYER" -> {
+                    val damage = currentAction.getInt("DAMAGE_PLAYER")
+                    Player.removeHealth(damage)
+                   output += "\n You take " + damage + " damage"
+               }
            }
 
            i++
@@ -32,24 +35,25 @@ class EnvironmentAction(var src:JSONArray) {
     fun executeOutput(currentAction:JSONObject):String{
         return currentAction.getString("output")
     }
-    fun executeAdd(currentAction:JSONObject){
+    fun executeAdd(currentAction:JSONObject,obj:EnvironmentObject){
         val jsonItemToAdd:JSONObject = currentAction.getJSONObject(addTag)
         val itemToAdd = Item.Companion.getItemFromObject(jsonItemToAdd)
         Player.addToInventory(itemToAdd)
 
     }
-    fun executeOpen(currentAction:JSONObject){
-
+    fun executeOpen(currentAction:JSONObject,obj:EnvironmentObject){
+        obj.open = true
+        obj.locked = false
     }
-    fun executeTake(currentAction:JSONObject){
-
+    fun executeTake(currentAction:JSONObject,obj:EnvironmentObject):String {
+        return ""
     }
-    fun executeTalk(currentAction:JSONObject){
-
+    fun executeTalk(currentAction:JSONObject,obj:EnvironmentObject):String {
+        return ""
     }
 
     companion object {
-        val addTag:String = "ITEM_TO_ADD"
+        val addTag:String = "ADD_TO_INVENTORY"
     }
 
 
