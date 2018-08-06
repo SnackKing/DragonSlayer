@@ -1,5 +1,5 @@
 package com.example.alleg.dragonslayer
 
 enum class Action {
-    EXAMINE, DESTROY, OPEN, TAKE, TALK, ERROR
+    EXAMINE, DESTROY, OPEN, TAKE, TALK, ERROR,INVENTORY, NOTSPECIAL
 }

@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import com.example.alleg.dragonslayer.Utils.checkSpecialAction
 import com.example.alleg.dragonslayer.Utils.getSynonym
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,23 +38,29 @@ class MainActivity : AppCompatActivity() {
        enterButton.setOnClickListener {
            var command:String = commandInput.text.toString().toLowerCase()
            command = filterCommand(command)
-           val action:Action = command.substring(0,command.indexOf(' ')).getSynonym()
-           val subject =  command.substring(command.indexOf(' ')+1)
-           displayText.text = displayText.text.toString() + "\n" + command
-           if(action != Action.ERROR) {
-               if (environment.containsKey(subject)) {
-                   val obj = environment.get(subject)
-                   if (obj != null) {
-                      val output = obj.execute(action)
-                       displayText.text = displayText.text.toString() + "\n" + output
-                   }
-               }
-               else{
-                   displayText.text = "That object does not exist"
-               }
+           var action = command.checkSpecialAction()
+           if(action != Action.NOTSPECIAL){
+                if(action == Action.INVENTORY){
+                    displayText.text = displayText.text.toString() + "\n" + Player.getInvAsString()
+                }
            }
-           else{
-               displayText.text = "You can't do that."
+           else {
+               action = command.substring(0,command.indexOf(' ')).getSynonym()
+               val subject = command.substring(command.indexOf(' ') + 1)
+               displayText.text = displayText.text.toString() + "\n" + command
+               if (action != Action.ERROR) {
+                   if (environment.containsKey(subject)) {
+                       val obj = environment.get(subject)
+                       if (obj != null) {
+                           val output = obj.execute(action)
+                           displayText.text = displayText.text.toString() + "\n" + output
+                       }
+                   } else {
+                       displayText.text = "That object does not exist"
+                   }
+               } else {
+                   displayText.text = "You can't do that."
+               }
            }
 
        }
@@ -122,11 +129,12 @@ class MainActivity : AppCompatActivity() {
     fun filterCommand(command:String):String{
         val re = Regex("[^A-Za-z0-9 ]")
         var filteredCommand = command
+        filteredCommand = filteredCommand.replace(" the ","")
+        filteredCommand = filteredCommand.replace(" with ","")
+        filteredCommand = filteredCommand.replace(" to ","")
+        filteredCommand = filteredCommand.replace(" up ","")
         filteredCommand = re.replace(command, "").toLowerCase()
-        filteredCommand = filteredCommand.replace("the","")
-        filteredCommand = filteredCommand.replace("with","")
-        filteredCommand = filteredCommand.replace("to","")
-        filteredCommand = filteredCommand.replace("up","")
+
 
 
 

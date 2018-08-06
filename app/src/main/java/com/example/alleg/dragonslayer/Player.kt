@@ -23,6 +23,7 @@ object Player : Human() {
     fun addOrSubtractCoinsFromInventory(numCoins:Int){
         inv.numCoins = numCoins
     }
+    fun getInvAsString():String = inv.toString()
 
     fun removeHealth(toRemove:Int){
         health -= 10;

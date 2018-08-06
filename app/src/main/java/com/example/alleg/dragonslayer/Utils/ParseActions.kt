@@ -7,6 +7,9 @@ private var destroyActions:Array<String> = arrayOf("destroy", "break", "attack",
 private var openActions:Array<String> = arrayOf("open","unlock", "unfasten", "unbolt", "unlatch")
 private var takeActions:Array<String> = arrayOf("take", "loot", "gather", "grab", "pickup")
 private var talkActions:Array<String> = arrayOf("talk", "communicate", "speak", "ask", "meet")
+//special actions
+private var invActions:Array<String> = arrayOf("open inventory", "inventory", "check inventory", "inv", "open inv", "check inv")
+
 
 
 fun String.getSynonym():Action{
@@ -28,6 +31,13 @@ fun String.getSynonym():Action{
     }
     else{
         returnValue = Action.ERROR
+    }
+    return returnValue
+}
+fun String.checkSpecialAction():Action{
+    var returnValue:Action = Action.NOTSPECIAL
+    if(invActions.contains(this)){
+        returnValue = Action.INVENTORY
     }
     return returnValue
 }

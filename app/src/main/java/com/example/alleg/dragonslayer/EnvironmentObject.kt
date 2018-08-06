@@ -44,7 +44,7 @@ open class EnvironmentObject(val src:JSONObject){
                 broken = true
             }
             Action.OPEN -> if(Player.inventory.hasKey(keyId) || !locked)output = openAction?.execute(this)?:"You can't do that to the " + name  else  output ="It is locked"
-
+            
             Action.TALK -> output = talkAction?.execute(this)?:"You can't do that to the " + name
         }
         return output

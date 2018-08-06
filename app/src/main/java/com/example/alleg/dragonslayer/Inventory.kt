@@ -44,4 +44,17 @@ class Inventory {
         }
         return hasKey
     }
+
+    override fun toString(): String {
+        var output:String = ""
+        for(i in items){
+            output += i.name + ", "
+        }
+        output += "\n"
+        for(i in keys){
+            output += i.name + ", "
+        }
+        return output
+    }
+
 }
